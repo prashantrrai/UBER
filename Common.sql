@@ -1,0 +1,4 @@
+SELECT * FROM Country
+SELECT * FROM City
+SELECT * FROM Vehicle
+SELECT * FROM Users

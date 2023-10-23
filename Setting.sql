@@ -1,0 +1,22 @@
+CREATE TABLE Setting(
+	RIDETIMEOUT INT NOT NULL DEFAULT 10,
+	STOPS INT NOT NULL DEFAULT 0,
+	EMAIL_USER  NVARCHAR(MAX),
+	EMAIL_PASSWORD NVARCHAR(MAX),
+	AccountSid NVARCHAR(MAX),
+	AuthToken NVARCHAR(MAX),
+	Twilio_PhoneNumber VARCHAR(12),
+	STRIPE_Secret_key NVARCHAR(MAX),
+	STRIPE_Publishable_key NVARCHAR(MAX),
+)
+
+INSERT INTO Setting (EMAIL_USER, EMAIL_PASSWORD, AccountSid, AuthToken, Twilio_PhoneNumber, STRIPE_Secret_key, STRIPE_Publishable_key)
+VALUES
+('krystal.feest66@ethereal.email', 'WX1TMcHyvRcYAn7dJj', 'AC3d5853fac69de288ef829049a44a36fa', '8172880e3f75eaafa1a1dbcc47f3631e', 
+'+17622245815', 'sk_test_51NZeiUANXK9scyulpxLuZ2UL5HvCqJBALzHeOfXQxDljxeroEWHfM9Gz9ZhdOau5mV9tyHQx36q5g6HcVPAvlXiA00iaZTcfFv', 
+'pk_test_51NZeiUANXK9scyulUjawM5Gzvx6F6MOm8nzHj96fghdbp1d6bOwX6ttQBrtNXXHAi5S5ga7RH7MHyRwpqUXFSJ6Q00kvn8Jkgu')
+
+SELECT * FROM Setting
+
+
+DROP TABLE Setting

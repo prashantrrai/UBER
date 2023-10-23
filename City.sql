@@ -1,11 +1,10 @@
 CREATE TABLE City(
-	CityId int IDENTITY PRIMARY KEY,
-	CityName varchar(30) NOT NULL UNIQUE,
+	CityName varchar(30) PRIMARY KEY,
 	Coordinates nvarchar(MAX),
-	CountryID int FOREIGN KEY REFERENCES Country(CountryCode)
+	DialingCode INT FOREIGN KEY REFERENCES Country(DialingCode)
 )
 
-INSERT INTO City(CityName, CountryID) 
+INSERT INTO City(CityName, DialingCode) 
 VALUES
 	('Mumbai', 91),
 	('Delhi', 91),
@@ -26,11 +25,22 @@ VALUES
 	('Colombo', 94),
 	('Morbi', 91)
 
+INSERT INTO City (CityName, DialingCode)
+VALUES 
+    ('Chandigarh', 91),
+    ('Hyderabad', 91),
+    ('Jaipur', 91),
+    ('Pune', 91),
+    ('Mysuru', 91),
+    ('Ahmednagar', 91),
+    ('Varanasi', 91),
+    ('Indore', 91),
+    ('Kanpur', 91);
 
 
 	
-
-
 DROP TABLE City
+
+
 SELECT * FROM City
 SELECT * FROM Country
