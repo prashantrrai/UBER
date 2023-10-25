@@ -27,3 +27,58 @@ SELECT * FROM Admin
 DROP TABLE Admin
 /*SELECT ASCII(1);
 SELECT CHAR(57);*/
+
+
+
+
+--SP for Admin Login
+
+CREATE PROCEDURE spAuthentication
+    @Email VARCHAR(30),
+    @Password VARCHAR(16),
+    @ConfirmPassword VARCHAR(16)
+AS
+BEGIN
+    IF @Email IS NULL OR @Email NOT LIKE '%_@%_%.%__%'
+    BEGIN
+        RAISERROR('Invalid Email Format', 10, 1);
+        RETURN;
+    END
+
+	IF NOT EXISTS (
+		SELECT 1 FROM Admin WHERE Email = @Email
+	)
+	BEGIN
+		RAISERROR('Email not found in our records.', 10, 5)
+		RETURN;
+	END
+
+    IF LEN(@Password) < 8
+    BEGIN
+        RAISERROR('Password must be at least 8 characters long.', 10, 2);
+        RETURN;
+    END
+
+    IF @Password <> @ConfirmPassword
+    BEGIN
+        RAISERROR('Password and ConfirmPassword do not match.', 10, 3);
+        RETURN;
+    END
+
+	IF NOT EXISTS(
+		SELECT 1 FROM Admin WHERE Password = @Password
+	)
+	BEGIN
+		RAISERROR ('Password Not Matching with our Records', 10,6)
+		RETURN;
+	END
+
+    RAISERROR('Login Authentication Successful', 0, 4);
+END
+
+EXEC spAuthentication @Email = 'prashantrai@gmail.com', @Password = 'admin123', @ConfirmPassword = 'admin123';
+
+
+DROP PROCEDURE spAuthentication
+
+

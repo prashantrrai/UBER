@@ -24,4 +24,8 @@ VALUES
 	('NP', 'Nepal', 'Nepalese Rupee', 977, 'https://www.worldometers.info/img/flags/np-flag.gif'),
 	('RU', 'Russia', 'Ruble', 7, 'https://www.worldometers.info/img/flags/rs-flag.gif')
 
+INSERT INTO Country (CountryCode, CountryName, Currency, DialingCode, Flag)
+VALUES
+('USA', 'United States of America', 'US Dollar', 2, 'https://www.worldometers.info/img/flags/us-flag.gif')
+
 SELECT * FROM Country
