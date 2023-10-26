@@ -1,5 +1,6 @@
 CREATE TABLE Vehicle(
-	VehicleName VARCHAR(30) PRIMARY KEY,
+	VehicleId INT IDENTITY PRIMARY KEY,
+	VehicleName VARCHAR(30) NOT NULL,
 	VehicleImage NVARCHAR(MAX) DEFAULT 'https://i.ndtvimg.com/i/2015-11/ola_650x400_51446651541.jpg'
 )
 
