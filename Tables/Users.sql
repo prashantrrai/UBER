@@ -1,19 +1,21 @@
 CREATE TABLE Users (
     UserId int IDENTITY PRIMARY KEY,
-    UserName varchar(30) NOT NULL,
-    UserEmail varchar(30) NOT NULL UNIQUE,
-    DialingCode int FOREIGN KEY REFERENCES Country(DialingCode),
-    UserPhone varchar(10) NOT NULL,
-	City VARCHAR(30) FOREIGN KEY REFERENCES City(CityName),
-	Country VARCHAR(30) NOT NULL,
-    UserProfile nvarchar(MAX) DEFAULT 'https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg',
-	RegistrationDate DATETIME  DEFAULT GETDATE(),
+    UserName VARCHAR(30) NOT NULL,
+    UserEmail VARCHAR(30) NOT NULL UNIQUE,
+    UserPhone VARCHAR(10) NOT NULL,
+	Password VARCHAR(16) NOT NULL,
+	ConfirmPassword VARCHAR(16) NOT NULL,
+    CountryID INT FOREIGN KEY REFERENCES Country(CountryId),
+    StateID INT FOREIGN KEY REFERENCES State(StateId),
+	CityID INT FOREIGN KEY REFERENCES City(CityId),
+    UserProfile NVARCHAR(MAX) DEFAULT 'https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg',
+	CreatedAt DATETIME2 NOT NULL DEFAULT GETDATE(),
 )
 
 
 DROP TABLE Users;
 
-INSERT INTO Users (UserName, UserEmail, DialingCode, UserPhone, City, Country) 
+INSERT INTO Users (UserName, UserEmail, UserPhone, CountryID, StateID, CityID) 
 VALUES
 	('John Doe', 'johndoe@example.com', '+1', '1234567890', 'Ottawa', 'Canada'),
     ('Jane Smith', 'janesmith@example.com', '+1', '9876543210', 'Ottawa', 'Canada'),
@@ -37,8 +39,30 @@ VALUES
     ('Jack Miller', 'jack@example.com', '+91', '7890478965', 'Hyderabad', '91');
 
 
-
+INSERT INTO Users (UserName, UserEmail, UserPhone, Password ,ConfirmPassword, CountryID, StateID, CityID) 
+VALUES
+	('John Doe', 'johndoe@example.com', '1234567890', 'abcdef123', 'abcdef123', 75, 7, 9)
 
 SELECT * FROM Users
 SELECT * FROM City
 SELECT * FROM Country
+
+
+CREATE TRIGGER CheckValidations
+ON Users
+AFTER INSERT
+AS
+BEGIN
+    DECLARE @Email VARCHAR(50);
+    DECLARE @Phone VARCHAR(10);
+    DECLARE @Password VARCHAR(16);
+    DECLARE @ConfirmPassword VARCHAR(16);
+
+	SELECT @Email = i.UserEmail, @Password = i.Password, @ConfirmPassword = i.ConfirmPassword, @Phone = i.UserPhone
+    FROM inserted AS i;
+
+    EXEC Validations @Email, @Phone, @Password, @ConfirmPassword;
+
+
+
+END;

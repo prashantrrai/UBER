@@ -234,6 +234,25 @@ VALUES
 
 SELECT * FROM Country WHERE DialingCode = 91
 
+CREATE UNIQUE INDEX IX_Country
+ON Country (CountryName, DialingCode)
+
+SET STATISTICS TIME ON SELECT * FROM Country WHERE DialingCode = 91;
+
+
+DROP  INDEX Country.IX_Country
+
+DECLARE @StartTime DATETIME;
+DECLARE @EndTime DATETIME;
+
+SET @StartTime = GETDATE();
+
+-- Your query here
+SELECT * FROM Country WHERE CountryId = 91;
+
+SET @EndTime = GETDATE();
+
+SELECT DATEDIFF(MILLISECOND, @StartTime, @EndTime) AS ExecutionTimeInMilliseconds;
 
 
 DROP TABLE Country
